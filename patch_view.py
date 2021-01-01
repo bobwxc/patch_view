@@ -200,6 +200,7 @@ def output_html(diff_header, diff_text, modify_text, filepath='./html_file.html'
 
         td.num {
             text-align: right;
+            user-select:none;
         }
 
         col.status {
@@ -212,6 +213,7 @@ def output_html(diff_header, diff_text, modify_text, filepath='./html_file.html'
         td.status {
             text-align: center;
             background-color: rgb(201, 201, 201);
+            user-select:none;
         }
 
         col.code {
@@ -476,6 +478,7 @@ if __name__ == "__main__":
 
         td.num {
             text-align: right;
+            user-select:none;
         }
 
         col.status {
@@ -488,6 +491,7 @@ if __name__ == "__main__":
         td.status {
             text-align: center;
             background-color: rgb(201, 201, 201);
+            user-select:none;
         }
 
         col.code {

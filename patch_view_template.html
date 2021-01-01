@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width initial-scale=1'>
+
+    <!--
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="./img/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="./img/favicon.png" />
+    -->
+
+    <title>diff view</title>
+    <style>
+        :root {
+            font-size: 15px;
+        }
+
+        html {
+            background-color: rgb(243, 243, 243);
+        }
+
+        body {
+            margin: auto;
+            padding: 1rem 1rem 1rem 1rem;
+            max-width: 60rem;
+        }
+
+        header {
+            padding: 0.1rem 1rem 0.1rem 1rem;
+            border-radius: 0.5rem;
+            background-color: rgba(191, 255, 191, 0.6);
+        }
+
+        article {
+            padding: 0.1rem 1rem 1rem 1rem;
+            border-radius: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        section.code_head {
+            border-radius: 0.1rem;
+            background-color: rgb(243, 243, 243);
+        }
+
+        section.code_content {
+            border-radius: 0.1rem;
+            border: 1px solid rgb(201, 201, 201);
+            overflow-x: auto;
+        }
+
+        table.code {
+            width: 100%;
+        }
+
+        col.num {
+            width: max-content;
+            font-size: 1rem;
+            color: rgb(60, 60, 60);
+        }
+
+        td.num {
+            text-align: right;
+        }
+
+        col.status {
+            width: max-content;
+            text-align: center;
+            font-size: 1rem;
+            color: rgb(60, 60, 60);
+        }
+
+        td.status {
+            text-align: center;
+            background-color: rgb(201, 201, 201);
+        }
+
+        col.code {
+            min-width: 80%;
+        }
+
+        td.increase {
+            background-color: rgb(102, 245, 164);
+        }
+
+        td.decrease {
+            background-color: rgb(252, 150, 150);
+        }
+
+        #powerby {
+            text-align: center;
+            color: rgb(60, 60, 60);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="title" id="header_title">title</h1>
+        <p class="time" id="header_time">time</p>
+        <p class="comment" id="header_comment">comment</p>
+    </header>
+    <nav></nav>
+    <hr>
+    <main>
+        <article>
+            <section class="code_head">
+                <h3 class="file" id="code_head_file">file</h3>
+                <h4 class="change" id="code_head_change">change index</h4>
+
+            </section>
+            <section class="code_content" id="code_content">
+                <table class="code" id="code_table">
+                    <colgroup>
+                        <col class="num">
+                        <col class="status">
+                        <col class="code">
+                    </colgroup>
+                    <!-- <tr class="code">
+                        <td class="num">1</td>
+                        <td class="status">+</td>
+                        <td class="code increase">aaa</td>
+                    </tr>
+                    <tr class="code">
+                        <td class="num">1000</td>
+                        <td class="status">-</td>
+                        <td class="code decrease">aaaa</td>
+                    </tr> -->
+                </table>
+            </section>
+        </article>
+        <aside></aside>
+    </main>
+    <hr>
+    <footer>
+        <p id="powerby">power by diff view</p>
+    </footer>
+    <script>
+        var modify_file = {
+            "title": "title",
+            "time": "time",
+            "comment": "comment",
+            "file": "file",
+            "change": "change",
+            "content": [["aa",0], ["aaaa",1], ["bbb",2]]
+        };
+
+        function init(modify_file) {
+            document.getElementById("header_title").innerText = modify_file.title;
+            document.getElementById("header_time").innerText = modify_file.time;
+            document.getElementById("header_comment").innerText = modify_file.comment;
+
+            document.getElementById("code_head_file").innerText = modify_file.file;
+            document.getElementById("code_head_change").innerText = modify_file.change;
+
+            document.title = document.getElementById("header_title").innerText +
+                " - " + document.getElementById("code_head_file").innerText;
+
+        }
+        init(modify_file);
+
+        function add_sub(modify_file) {
+            for (i in modify_file.content) {
+                let sub = document.createElement("tr");
+                sub.className = "code";
+
+                let num = document.createElement("td");
+                num.className = "num";
+                num.innerText = parseInt(i)+1;
+
+                let status = document.createElement("td");
+                status.className = "status";
+                if (modify_file.content[i][1] == 1) {
+                    status.innerText = '+';
+                } else if (modify_file.content[i][1] == 2) {
+                    status.innerText = '-';
+                } else {
+                    status.innerText = ' ';
+                }
+
+                let code = document.createElement("td");
+                if (modify_file.content[i][1] == 1) {
+                    code.className = "code increase";
+                } else if (modify_file.content[i][1] == 2) {
+                    code.className = "code decrease";
+                } else {
+                    code.className = "code";
+                }
+                code.innerText = modify_file.content[i][0];
+
+                sub.appendChild(num);
+                sub.appendChild(status);
+                sub.appendChild(code);
+                document.getElementById("code_table").appendChild(sub);
+            }
+        }
+        add_sub(modify_file);
+
+    </script>
+</body>
+
+</html>
